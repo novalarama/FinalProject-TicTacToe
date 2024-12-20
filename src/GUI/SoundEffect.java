@@ -1,13 +1,14 @@
 package GUI;
 
-import java.io.IOException;
 import java.net.URL;
 import javax.sound.sampled.*;
 
 public enum SoundEffect {
     EAT_FOOD("GUI/audio/bruh.wav"),
     EXPLODE("GUI/audio/punch.wav"),
-    DIE("GUI/audio/happy.wav");
+    // DIE("GUI/audio/happy.wav"),
+    WIN("GUI/audio/happy.wav"),
+    LOSE("GUI/audio/sad_trumpet.wav"); 
 
     public static enum Volume {
         MUTE, LOW, MEDIUM, HIGH

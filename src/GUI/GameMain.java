@@ -92,9 +92,12 @@ public class GameMain extends JPanel {
       // Putar suara berdasarkan kondisi
       if (currentState == State.PLAYING) {
           SoundEffect.EAT_FOOD.play();
-      } else if (currentState == State.CROSS_WON || currentState == State.NOUGHT_WON) {
-          SoundEffect.DIE.play();
-      } else if (currentState == State.DRAW) {
+      } else if (currentState == State.CROSS_WON) {
+          SoundEffect.WIN.play();
+      } else if (currentState == State.NOUGHT_WON){
+        SoundEffect.LOSE.play();
+      }
+      else if (currentState == State.DRAW) {
           SoundEffect.EXPLODE.play();
       }
   
@@ -107,23 +110,47 @@ public class GameMain extends JPanel {
 
     /** Let the AI player make its move */
     private void aiMove() {
-        int[] aiMove = aiPlayer.move();  // Get AI's best move
-        if (aiMove != null) {
-            makeMove(aiMove[0], aiMove[1], aiPlayer.mySeed);
+      // Run AI move in a separate thread to avoid blocking the UI
+      new Thread(new Runnable() {
+        @Override
+        public void run() {
+          try {
+            // Introduce a delay of 1-2 seconds
+            Thread.sleep(1000 + (int) (Math.random() * 1000));
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+
+          // Get AI's best move
+          int[] aiMove = aiPlayer.move();
+          if (aiMove != null) {
+            // Make the AI's move on the Event Dispatch Thread
+            SwingUtilities.invokeLater(new Runnable() {
+              @Override
+              public void run() {
+                makeMove(aiMove[0], aiMove[1], aiPlayer.mySeed);
+                // Repaint the game panel to reflect the AI's move
+                repaint();
+              }
+            });
+          }
         }
+      }).start();
     }
 
     /** Update the status message on the status bar */
     private void updateStatus() {
-        if (currentState == State.PLAYING) {
-            statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
-        } else if (currentState == State.DRAW) {
-            statusBar.setText("It's a Draw! Click to play again.");
-        } else if (currentState == State.CROSS_WON) {
-            statusBar.setText("'X' Won! Click to play again.");
-        } else if (currentState == State.NOUGHT_WON) {
-            statusBar.setText("'O' Won! Click to play again.");
-        }
+      if (currentState == State.PLAYING) {
+        statusBar.setText((currentPlayer == Seed.CROSS) ? "Your Turn" : "AI's Turn");
+      } else if (currentState == State.DRAW) {
+        statusBar.setText("It's a Draw! Click to play again.");
+      } else if (currentState == State.CROSS_WON) {
+        statusBar.setText("You Won! Click to play again.");
+        SoundEffect.WIN.play();
+      } else if (currentState == State.NOUGHT_WON) {
+        statusBar.setText("AI Won! Click to play again.");
+        SoundEffect.LOSE.play();
+      }
     }
 
     /** Custom painting codes on this JPanel */
