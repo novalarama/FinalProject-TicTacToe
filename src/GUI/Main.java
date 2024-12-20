@@ -1,14 +1,25 @@
 package GUI;
 
 import javax.swing.SwingUtilities;
+import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args) {
-        // Run GUI codes in the Event-Dispatching thread for thread safety
+        // Jalankan GUI dalam Event-Dispatching Thread untuk thread safety
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new TicTacToeGame(); // Let the constructor do the job
+                // Buat JFrame
+                JFrame frame = new JFrame(GameMain.TITLE);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                // Tambahkan GameMain sebagai konten JFrame
+                frame.setContentPane(new GameMain());
+
+                // Atur ukuran dan pusatkan
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         });
     }
