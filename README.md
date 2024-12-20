@@ -1,6 +1,6 @@
 ## Final Project Algoritma Struktur Data - Sistem Informasi ITS Kelas A
 Repository ini adalah repository yang berisikan 2 project utama
-1. TicTacToe AI
+1. TicTacToe AI pada project GUI
 2. ConnectFour
 
 **TicTacToe AI**
