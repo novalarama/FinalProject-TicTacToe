@@ -1,18 +1,11 @@
-## Getting Started
+## Final Project Algoritma Struktur Data - Sistem Informasi ITS Kelas A
+Repository ini adalah repository yang berisikan 2 project utama
+1. TicTacToe AI
+2. ConnectFour
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+**TicTacToe AI**
+Project ini bisa dimainkan dengan menjalankan file Main.java didalam src/GUI/Main.java
+Pada game ini anda akan bermain tic tac toe dengan AI.
 
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+**ConnectFour**
+Project ini bisa dimainkan dengan menjalankan file Main.java didalam src/TicTacToeAI/connectfour/Main.java
