@@ -13,59 +13,62 @@ import java.net.URL;
 import javax.sound.sampled.*;
 
 public enum SoundEffect {
-    EAT_FOOD("GUI/audio/jumpclick.wav"),
-    EXPLODE("GUI/audio/selectclick.wav"),
-    WIN("GUI/audio/win.wav"),
-    LOSE("GUI/audio/lose.wav"),
-    START("GUI/audio/start.wav"),
-    BACKSONG("GUI/audio/backsong.wav");
+  CLICK_CHAR("GUI/audio/click-char.wav"),
+  EAT_FOOD("GUI/audio/jumpclick.wav"),
+  EXPLODE("GUI/audio/selectclick.wav"),
+  WIN("GUI/audio/win.wav"),
+  LOSE("GUI/audio/lose.wav"),
+  START("GUI/audio/start.wav"),
+  BACKSONG("GUI/audio/backsong.wav");
 
-    public static enum Volume {
-        MUTE, LOW, MEDIUM, HIGH
+  public static enum Volume {
+    MUTE, LOW, MEDIUM, HIGH
+  }
+
+  public static Volume volume = Volume.MEDIUM;
+
+  private Clip clip;
+
+  private SoundEffect(String soundFileName) {
+    try {
+      URL url = this.getClass().getClassLoader().getResource(soundFileName);
+      if (url == null) {
+        System.err.println("Couldn't find file: " + soundFileName);
+        return;
+      }
+      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+      clip = AudioSystem.getClip();
+      clip.open(audioInputStream);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    public static Volume volume = Volume.MEDIUM;
-
-    private Clip clip;
-
-    private SoundEffect(String soundFileName) {
-        try {
-            URL url = this.getClass().getClassLoader().getResource(soundFileName);
-            if (url == null) {
-                System.err.println("Couldn't find file: " + soundFileName);
-                return;
-            }
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-            clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+  public void play() {
+    if (volume != Volume.MUTE) {
+      if (clip.isRunning())
+        clip.stop();
+      clip.setFramePosition(0);
+      clip.start();
     }
+  }
 
-    public void play() {
-        if (volume != Volume.MUTE) {
-            if (clip.isRunning()) clip.stop();
-            clip.setFramePosition(0);
-            clip.start();
-        }
+  public void loop() {
+    if (volume != Volume.MUTE) {
+      if (clip.isRunning())
+        clip.stop();
+      clip.setFramePosition(0);
+      clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop indefinitely
     }
+  }
 
-    public void loop() {
-        if (volume != Volume.MUTE) {
-            if (clip.isRunning()) clip.stop();
-            clip.setFramePosition(0);
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop indefinitely
-        }
+  public void stop() {
+    if (clip.isRunning()) {
+      clip.stop();
     }
+  }
 
-    public void stop() {
-        if (clip.isRunning()) {
-            clip.stop(); // Stop the sound if it's playing
-        }
-    }
-
-    static void initGame() {
-        values(); // Initialize all sound effects
-    }
+  static void initGame() {
+    values(); // Initialize all sound effects
+  }
 }

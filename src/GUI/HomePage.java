@@ -31,6 +31,9 @@ public class HomePage extends JPanel {
 
     setLayout(new GridBagLayout());
 
+    SoundEffect.volume = SoundEffect.Volume.LOW;
+    SoundEffect.BACKSONG.loop();
+
     SoundEffect.volume = SoundEffect.Volume.MEDIUM;
     SoundEffect.BACKSONG.loop();
 
@@ -65,7 +68,7 @@ public class HomePage extends JPanel {
     playerNameField.setOpaque(false);
     playerNameField.setUI(new RoundedTextFieldUI());
 
-    JButton startButton = new JButton("START GAME") {
+    JButton startButton = new JButton("Choose Character") {
       @Override
       protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
@@ -84,8 +87,10 @@ public class HomePage extends JPanel {
     startButton.setFocusPainted(false);
     startButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     startButton.setPreferredSize(new Dimension(300, 50));
-    startButton.addActionListener(this::startCharacterSelection);
-
+    startButton.addActionListener(e -> {
+      SoundEffect.CLICK_CHAR.play();
+      startCharacterSelection(e);
+    });
     GridBagConstraints gbc = new GridBagConstraints();
 
     gbc.insets = new Insets(100, 10, 5, 10);
@@ -128,9 +133,6 @@ public class HomePage extends JPanel {
     if (playerName.isEmpty()) {
       playerName = "Player";
     }
-
-    SoundEffect.BACKSONG.stop();
-    SoundEffect.START.play();
 
     parentFrame.setContentPane(new CharacterSelectionPage(parentFrame, playerName));
     parentFrame.revalidate();

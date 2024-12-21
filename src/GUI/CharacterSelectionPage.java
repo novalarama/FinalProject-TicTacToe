@@ -63,7 +63,10 @@ public class CharacterSelectionPage extends JPanel {
     characterIcons = loadCharacterImages();
 
     JButton prevCharacterButton = new JButton("<");
-    prevCharacterButton.addActionListener(e -> showPreviousCharacter());
+    prevCharacterButton.addActionListener(e -> {
+      showPreviousCharacter();
+      SoundEffect.CLICK_CHAR.play();
+    });
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
@@ -78,7 +81,10 @@ public class CharacterSelectionPage extends JPanel {
     add(characterLabel, gbc);
 
     JButton nextCharacterButton = new JButton(">");
-    nextCharacterButton.addActionListener(e -> showNextCharacter());
+    nextCharacterButton.addActionListener(e -> {
+      showNextCharacter();
+      SoundEffect.CLICK_CHAR.play();
+    });
     gbc.gridx = 2;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
@@ -101,7 +107,10 @@ public class CharacterSelectionPage extends JPanel {
     add(opponentLabelTitle, gbc);
 
     JButton prevOpponentButton = new JButton("<");
-    prevOpponentButton.addActionListener(e -> showPreviousOpponent());
+    prevOpponentButton.addActionListener(e -> {
+      showPreviousOpponent();
+      SoundEffect.CLICK_CHAR.play();
+    });
     gbc.gridx = 0;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
@@ -116,17 +125,39 @@ public class CharacterSelectionPage extends JPanel {
     add(opponentLabel, gbc);
 
     JButton nextOpponentButton = new JButton(">");
-    nextOpponentButton.addActionListener(e -> showNextOpponent());
+    nextOpponentButton.addActionListener(e -> {
+      showNextOpponent();
+      SoundEffect.CLICK_CHAR.play();
+    });
     gbc.gridx = 2;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
     gbc.insets = new Insets(10, 10, 10, 10);
     add(nextOpponentButton, gbc);
 
-    JButton startGameButton = new JButton("Start Game");
+    JButton startGameButton = new JButton("Start Game") {
+      @Override
+      protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2d.setColor(new Color(255, 165, 0));
+        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
+
+        super.paintComponent(g);
+
+        g2d.dispose();
+      }
+    };
+    startGameButton.setFont(loadPixelFont(16));
+    startGameButton.setForeground(Color.BLACK);
+    startGameButton.setFocusPainted(false);
+    startGameButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+    startGameButton.setPreferredSize(new Dimension(300, 50));
     startGameButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        SoundEffect.CLICK_CHAR.play();
         if (currentCharacterIndex != currentOpponentIndex) {
           selectedCharacter = characterIcons.get(currentCharacterIndex).toString();
           selectedOpponent = characterIcons.get(currentOpponentIndex).toString();
