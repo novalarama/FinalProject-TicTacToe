@@ -136,6 +136,12 @@ public class HomePage extends JPanel {
       playerName = "Player";
     }
 
+    if (playerName.length() > 15) {
+      JOptionPane.showMessageDialog(this, "Name is too long! Please use up to 15 characters.",
+              "Name Too Long", JOptionPane.WARNING_MESSAGE);
+      return;
+    }
+
     parentFrame.setContentPane(new CharacterSelectionPage(parentFrame, playerName));
     parentFrame.revalidate();
     parentFrame.repaint();
