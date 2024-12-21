@@ -249,7 +249,26 @@ public class CharacterSelectionPage extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (backgroundImg != null) {
-      g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);
+      Graphics2D g2d = (Graphics2D) g.create();
+
+      int panelWidth = getWidth();
+      int panelHeight = getHeight();
+
+      int imgWidth = backgroundImg.getWidth();
+      int imgHeight = backgroundImg.getHeight();
+
+      double scaleX = (double) panelWidth / imgWidth;
+      double scaleY = (double) panelHeight / imgHeight;
+      double scale = Math.max(scaleX, scaleY); // Samakan pendekatan dengan HomePage
+
+      int scaledWidth = (int) (imgWidth * scale);
+      int scaledHeight = (int) (imgHeight * scale);
+
+      int x = (panelWidth - scaledWidth) / 2;
+      int y = (panelHeight - scaledHeight) / 2;
+
+      g2d.drawImage(backgroundImg, x, y, scaledWidth, scaledHeight, null);
+      g2d.dispose();
     }
   }
 }
