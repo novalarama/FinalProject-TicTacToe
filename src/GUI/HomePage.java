@@ -31,9 +31,6 @@ public class HomePage extends JPanel {
 
     setLayout(new GridBagLayout());
 
-    SoundEffect.volume = SoundEffect.Volume.LOW;
-    SoundEffect.BACKSONG.loop();
-
     SoundEffect.volume = SoundEffect.Volume.MEDIUM;
     SoundEffect.BACKSONG.loop();
 
@@ -58,7 +55,10 @@ public class HomePage extends JPanel {
     }
 
     playerNameField = new JTextField(15);
+    playerNameField.setUI(new GUI.RoundedTextFieldUI());
     playerNameField.setHorizontalAlignment(JTextField.CENTER);
+    playerNameField.setFocusable(true);
+    playerNameField.setColumns(20);
     playerNameField.setFont(loadPixelFont(16));
     playerNameField.setBackground(new Color(30, 30, 30));
     playerNameField.setForeground(Color.WHITE);
@@ -86,6 +86,7 @@ public class HomePage extends JPanel {
     startButton.setFont(loadPixelFont(16));
     startButton.setForeground(Color.BLACK);
     startButton.setFocusPainted(false);
+    startButton.setFocusable(false);
     startButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     startButton.setPreferredSize(new Dimension(300, 50));
     startButton.addActionListener(e -> {
