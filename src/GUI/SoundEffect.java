@@ -13,10 +13,10 @@ import java.net.URL;
 import javax.sound.sampled.*;
 
 public enum SoundEffect {
-    EAT_FOOD("GUI/audio/bruh.wav"),
-    EXPLODE("GUI/audio/punch.wav"),
-    WIN("GUI/audio/happy.wav"),
-    LOSE("GUI/audio/sad_trumpet.wav"),
+    EAT_FOOD("GUI/audio/jumpclick.wav"),
+    EXPLODE("GUI/audio/selectclick.wav"),
+    WIN("GUI/audio/win.wav"),
+    LOSE("GUI/audio/lose.wav"),
     START("GUI/audio/start.wav"),
     BACKSONG("GUI/audio/backsong.wav");
 
