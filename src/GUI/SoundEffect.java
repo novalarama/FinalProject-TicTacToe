@@ -15,9 +15,10 @@ import javax.sound.sampled.*;
 public enum SoundEffect {
     EAT_FOOD("GUI/audio/bruh.wav"),
     EXPLODE("GUI/audio/punch.wav"),
-    // DIE("GUI/audio/happy.wav"),
     WIN("GUI/audio/happy.wav"),
-    LOSE("GUI/audio/sad_trumpet.wav"); 
+    LOSE("GUI/audio/sad_trumpet.wav"),
+    START("GUI/audio/start.wav"),
+    BACKSONG("GUI/audio/backsong.wav");
 
     public static enum Volume {
         MUTE, LOW, MEDIUM, HIGH
@@ -47,6 +48,20 @@ public enum SoundEffect {
             if (clip.isRunning()) clip.stop();
             clip.setFramePosition(0);
             clip.start();
+        }
+    }
+
+    public void loop() {
+        if (volume != Volume.MUTE) {
+            if (clip.isRunning()) clip.stop();
+            clip.setFramePosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop indefinitely
+        }
+    }
+
+    public void stop() {
+        if (clip.isRunning()) {
+            clip.stop(); // Stop the sound if it's playing
         }
     }
 
