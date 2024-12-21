@@ -18,6 +18,7 @@ public class CharacterSelectionPage extends JPanel {
   private String playerName;
   private String selectedCharacter;
   private String selectedOpponent;
+  private String difficultyLevel = "Medium"; // Default difficulty level
   private List<ImageIcon> characterIcons;
   private int currentCharacterIndex = 0;
   private int currentOpponentIndex = 0;
@@ -55,7 +56,7 @@ public class CharacterSelectionPage extends JPanel {
       titleLabel.setFont(titleFont);
       titleLabel.setForeground(Color.WHITE);
     } catch (Exception e) {
-      titleLabel.setFont(new Font("SansSerif", Font.BOLD, 48));
+      titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
     }
 
     gbc.gridx = 0;
@@ -96,13 +97,8 @@ public class CharacterSelectionPage extends JPanel {
     add(nextCharacterButton, gbc);
 
     JLabel opponentLabelTitle = new JLabel("Select Your Opponent");
-    try {
-      Font titleFont = loadPixelFont(24).deriveFont(Font.BOLD);
-      opponentLabelTitle.setFont(titleFont);
-      opponentLabelTitle.setForeground(Color.WHITE);
-    } catch (Exception e) {
-      opponentLabelTitle.setFont(new Font("SansSerif", Font.BOLD, 48));
-    }
+    opponentLabelTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
+    opponentLabelTitle.setForeground(Color.WHITE);
 
     gbc.gridx = 0;
     gbc.gridy = 2;
@@ -139,36 +135,98 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridwidth = 1;
     add(nextOpponentButton, gbc);
 
-    JButton startGameButton = new JButton("Start Game") {
-      @Override
-      protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    JLabel difficultyLabel = new JLabel("Select Difficulty Level");
+    try {
+      Font titleFont = loadPixelFont(12).deriveFont(Font.BOLD);
+      difficultyLabel.setFont(titleFont);
+      difficultyLabel.setForeground(Color.WHITE);
+    } catch (Exception e) {
+      difficultyLabel.setFont(new Font("SansSerif", Font.BOLD, 48));
+    }
 
-        g2d.setColor(new Color(255, 165, 0));
-        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    gbc.gridwidth = 3;
+    gbc.insets = new Insets(20, 0, 20, 0);
+    add(difficultyLabel, gbc);
 
-        super.paintComponent(g);
+    JPanel difficultyPanel = new JPanel(new GridLayout(1, 3, 10, 0));
+    difficultyPanel.setOpaque(false);
+    JButton easyButton = new JButton("Easy");
+    JButton mediumButton = new JButton("Medium");
+    JButton hardButton = new JButton("Hard");
 
-        g2d.dispose();
-      }
-    };
-    startGameButton.setFont(loadPixelFont(16));
-    startGameButton.setForeground(Color.BLACK);
-    startGameButton.setFocusPainted(false);
-    startGameButton.setFocusable(false);
-    startGameButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-    startGameButton.setPreferredSize(new Dimension(300, 50));
+    // set easy button, medium button, and hard button font to pixel font
+    easyButton.setFont(loadPixelFont(12));
+    mediumButton.setFont(loadPixelFont(12));
+    hardButton.setFont(loadPixelFont(12));
+
+    // add padding vertically to the buttons
+    easyButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+    mediumButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+    hardButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+    // set easy button background color to green
+    easyButton.setBackground(Color.GREEN);
+    easyButton.setOpaque(true);
+    mediumButton.setBackground(Color.YELLOW);
+    mediumButton.setOpaque(true);
+    hardButton.setBackground(Color.RED);
+    hardButton.setOpaque(true);
+
+    easyButton.addActionListener(e -> {
+      difficultyLevel = "Easy";
+      easyButton.setBackground(Color.BLACK);
+      easyButton.setForeground(Color.WHITE);
+      mediumButton.setBackground(Color.YELLOW);
+      mediumButton.setForeground(Color.BLACK);
+      hardButton.setBackground(Color.RED);
+      hardButton.setForeground(Color.BLACK);
+      SoundEffect.CLICK_CHAR.play();
+    });
+
+    mediumButton.addActionListener(e -> {
+      difficultyLevel = "Medium";
+      mediumButton.setBackground(Color.BLACK);
+      mediumButton.setForeground(Color.WHITE);
+      easyButton.setBackground(Color.GREEN);
+      easyButton.setForeground(Color.BLACK);
+      hardButton.setBackground(Color.RED);
+      hardButton.setForeground(Color.BLACK);
+      SoundEffect.CLICK_CHAR.play();
+    });
+
+    hardButton.addActionListener(e -> {
+      difficultyLevel = "Hard";
+      hardButton.setBackground(Color.BLACK);
+      hardButton.setForeground(Color.WHITE);
+      easyButton.setBackground(Color.GREEN);
+      easyButton.setForeground(Color.BLACK);
+      mediumButton.setBackground(Color.YELLOW);
+      mediumButton.setForeground(Color.BLACK);
+      SoundEffect.CLICK_CHAR.play();
+    });
+
+    difficultyPanel.add(easyButton);
+    difficultyPanel.add(mediumButton);
+    difficultyPanel.add(hardButton);
+
+    gbc.gridx = 0;
+    gbc.gridy = 5;
+    gbc.gridwidth = 3;
+    gbc.insets = new Insets(20, 0, 20, 0);
+    add(difficultyPanel, gbc);
+
+    JButton startGameButton = new JButton("Start Game");
     startGameButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SoundEffect.CLICK_CHAR.play();
         if (currentCharacterIndex != currentOpponentIndex) {
-          selectedCharacter = characterIcons.get(currentCharacterIndex).toString();
-          selectedOpponent = characterIcons.get(currentOpponentIndex).toString();
+          selectedCharacter = characterIcons.get(currentCharacterIndex).getDescription();
+          selectedOpponent = characterIcons.get(currentOpponentIndex).getDescription();
           Seed.CROSS.setImage(selectedCharacter);
           Seed.NOUGHT.setImage(selectedOpponent);
-          parentFrame.setContentPane(new GameMain(parentFrame, playerName));
+          parentFrame.setContentPane(new GameMain(parentFrame, playerName, difficultyLevel));
           parentFrame.revalidate();
           parentFrame.repaint();
         } else {
@@ -178,22 +236,9 @@ public class CharacterSelectionPage extends JPanel {
     });
 
     gbc.gridx = 0;
-    gbc.gridy = 4;
+    gbc.gridy = 6;
     gbc.gridwidth = 3;
     add(startGameButton, gbc);
-  }
-
-  private Font loadPixelFont(int size) {
-    try {
-      URL fontUrl = getClass().getClassLoader().getResource("GUI/fonts/minecraftia.ttf");
-      if (fontUrl != null) {
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
-        return font.deriveFont((float) size);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return new Font("SansSerif", Font.BOLD, size);
   }
 
   private List<ImageIcon> loadCharacterImages() {
@@ -243,6 +288,21 @@ public class CharacterSelectionPage extends JPanel {
   private void showNextOpponent() {
     currentOpponentIndex = (currentOpponentIndex + 1) % characterIcons.size();
     opponentLabel.setIcon(resizeIcon(characterIcons.get(currentOpponentIndex), 120, 120));
+  }
+
+  private Font loadPixelFont(int size) {
+    try {
+      URL fontUrl = getClass().getClassLoader().getResource("GUI/fonts/minecraftia.ttf");
+      if (fontUrl != null) {
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
+        return font.deriveFont((float) size);
+      } else {
+        System.err.println("Couldn't find font file: GUI/fonts/minecraftia.ttf");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return new Font("SansSerif", Font.BOLD, size);
   }
 
   @Override

@@ -11,19 +11,34 @@ package GUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /** AIPlayer using Minimax algorithm */
 public class AIPlayerMinimax extends AIPlayer {
+    private Random rand = new Random();
 
   /** Constructor with the given game board */
-  public AIPlayerMinimax(Board board) {
-    super(board);
+  public AIPlayerMinimax(Board board, String difficultyLevel) {
+    super(board, difficultyLevel);
   }
 
   /** Get next best move for computer. Return int[2] of {row, col} */
   @Override
   public int[] move() {
-    int[] result = minimax(2, mySeed); // depth 2, maximizing player's turn
+    int depth;
+    switch (difficultyLevel.toLowerCase()) {
+      case "easy":
+        List<int[]> moves = generateMoves();
+        return moves.get(rand.nextInt(moves.size()));
+      case "medium":
+        depth = 2;
+        break;
+      case "hard":
+      default:
+        depth = 3;
+        break;
+    }
+    int[] result = minimax(depth, mySeed);
     return new int[] { result[1], result[2] }; // row, col
   }
 

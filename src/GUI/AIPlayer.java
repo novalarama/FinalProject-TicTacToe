@@ -17,8 +17,12 @@ public abstract class AIPlayer {
   protected Seed mySeed;
   protected Seed oppSeed;
 
-  public AIPlayer(Board board) {
+
+  protected String difficultyLevel;
+
+  public AIPlayer(Board board, String difficultyLevel) {
     cells = board.cells;
+    this.difficultyLevel = difficultyLevel;
   }
 
   public void setSeed(Seed seed) {

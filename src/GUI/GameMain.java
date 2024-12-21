@@ -31,13 +31,15 @@ public class GameMain extends JPanel {
   private int timeLeft;
 
   private String playerName = "Player";
+  private String difficultyLevel;
   private int lastMoveRow = -1;
   private int lastMoveCol = -1;
 
   private boolean gameStarted = false;
 
-  public GameMain(JFrame parentFrame, String playerName) {
+  public GameMain(JFrame parentFrame, String playerName, String difficultyLevel) {
     this.playerName = playerName;
+    this.difficultyLevel = difficultyLevel;
 
     setBackground(Color.DARK_GRAY);
     setLayout(new BorderLayout());
@@ -108,7 +110,7 @@ public class GameMain extends JPanel {
     board = new Board();
     currentPlayer = Seed.CROSS;
     currentState = State.PLAYING;
-    aiPlayer = new AIPlayerMinimax(board);
+    aiPlayer = new AIPlayerMinimax(board, difficultyLevel);
     aiPlayer.setSeed(Seed.NOUGHT);
     timeLeft = GAME_TIME;
     updateTimerLabel();

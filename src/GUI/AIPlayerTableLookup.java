@@ -11,42 +11,50 @@ package GUI;
 
 public class AIPlayerTableLookup extends AIPlayer {
 
-  public AIPlayerTableLookup(Board board) {
-    super(board);
+  public AIPlayerTableLookup(Board board, String difficultyLevel) {
+    super(board, difficultyLevel);
   }
 
   @Override
   public int[] move() {
-    // Rule 1: Take winning move
-    int[] move = findWinningMove(mySeed);
-    if (move != null)
-      return move;
+    if (difficultyLevel.equalsIgnoreCase("easy")) {
+      // Only use Rule 5 and default behavior
+      return findBestMove(mySeed) != null ? findBestMove(mySeed) : findAnyEmptyCell();
+    } else if (difficultyLevel.equalsIgnoreCase("medium")) {
+      // Use Rule 1, Rule 2, and Rule 5
+      int[] move = findWinningMove(mySeed);
+      if (move != null)
+        return move;
 
-    // Rule 2: Block opponent's winning move
-    move = findBlockingMove(oppSeed);
-    if (move != null)
-      return move;
+      move = findBlockingMove(oppSeed);
+      if (move != null)
+        return move;
 
-    // Rule 3: Create a fork
-    move = findFork(mySeed);
-    if (move != null)
-      return move;
+      return findBestMove(mySeed) != null ? findBestMove(mySeed) : findAnyEmptyCell();
+    } else {
+      // Hard uses all rules
+      // Use all rules: Rule 1, Rule 2, Rule 3, Rule 4, and Rule 5
+      int[] move = findWinningMove(mySeed);
+      if (move != null)
+        return move;
 
-    // Rule 4: Prevent opponent's fork
-    for (int row = 0; row < Board.ROWS; row++) {
-      for (int col = 0; col < Board.COLS; col++) {
-        if (cells[row][col].content == Seed.NO_SEED && !causesOpponentFork(mySeed, row, col)) {
-          return new int[] { row, col };
-        }
-      }
+      move = findBlockingMove(oppSeed);
+      if (move != null)
+        return move;
+
+      move = findFork(mySeed);
+      if (move != null)
+        return move;
+
+      move = findFork(oppSeed);
+      if (move != null)
+        return move;
+
+      return findBestMove(mySeed) != null ? findBestMove(mySeed) : findAnyEmptyCell();
     }
+  }
 
-    // Rule 5: Choose the position with the most winning ways
-    move = findBestMove(mySeed);
-    if (move != null)
-      return move;
-
-    // Default: Pick any empty cell
+  private int[] findAnyEmptyCell() {
     for (int row = 0; row < Board.ROWS; row++) {
       for (int col = 0; col < Board.COLS; col++) {
         if (cells[row][col].content == Seed.NO_SEED) {
@@ -54,8 +62,7 @@ public class AIPlayerTableLookup extends AIPlayer {
         }
       }
     }
-
-    return null; // No valid move (shouldn't happen in a valid game)
+    return null; // No empty cells available
   }
 
   private int[] findWinningMove(Seed seed) {
