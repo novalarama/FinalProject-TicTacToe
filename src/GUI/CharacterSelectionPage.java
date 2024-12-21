@@ -30,6 +30,7 @@ public class CharacterSelectionPage extends JPanel {
     this.playerName = playerName;
 
     setPreferredSize(new Dimension(800, 600));
+    setFocusable(false); // Prevent panel from getting focus
 
     try {
       URL imgUrl = getClass().getClassLoader().getResource("GUI/images/background.png");
@@ -63,6 +64,8 @@ public class CharacterSelectionPage extends JPanel {
     characterIcons = loadCharacterImages();
 
     JButton prevCharacterButton = new JButton("<");
+    prevCharacterButton.setFocusPainted(false);
+    prevCharacterButton.setFocusable(false);
     prevCharacterButton.addActionListener(e -> {
       showPreviousCharacter();
       SoundEffect.CLICK_CHAR.play();
@@ -81,6 +84,8 @@ public class CharacterSelectionPage extends JPanel {
     add(characterLabel, gbc);
 
     JButton nextCharacterButton = new JButton(">");
+    nextCharacterButton.setFocusPainted(false);
+    nextCharacterButton.setFocusable(false);
     nextCharacterButton.addActionListener(e -> {
       showNextCharacter();
       SoundEffect.CLICK_CHAR.play();
@@ -107,6 +112,8 @@ public class CharacterSelectionPage extends JPanel {
     add(opponentLabelTitle, gbc);
 
     JButton prevOpponentButton = new JButton("<");
+    prevOpponentButton.setFocusPainted(false);
+    prevOpponentButton.setFocusable(false);
     prevOpponentButton.addActionListener(e -> {
       showPreviousOpponent();
       SoundEffect.CLICK_CHAR.play();
@@ -125,6 +132,8 @@ public class CharacterSelectionPage extends JPanel {
     add(opponentLabel, gbc);
 
     JButton nextOpponentButton = new JButton(">");
+    nextOpponentButton.setFocusPainted(false);
+    nextOpponentButton.setFocusable(false);
     nextOpponentButton.addActionListener(e -> {
       showNextOpponent();
       SoundEffect.CLICK_CHAR.play();
@@ -152,6 +161,7 @@ public class CharacterSelectionPage extends JPanel {
     startGameButton.setFont(loadPixelFont(16));
     startGameButton.setForeground(Color.BLACK);
     startGameButton.setFocusPainted(false);
+    startGameButton.setFocusable(false);
     startGameButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     startGameButton.setPreferredSize(new Dimension(300, 50));
     startGameButton.addActionListener(new ActionListener() {

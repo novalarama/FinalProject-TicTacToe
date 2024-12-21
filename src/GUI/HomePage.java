@@ -58,6 +58,7 @@ public class HomePage extends JPanel {
     }
 
     playerNameField = new JTextField(15);
+    playerNameField.setHorizontalAlignment(JTextField.CENTER);
     playerNameField.setFont(loadPixelFont(16));
     playerNameField.setBackground(new Color(30, 30, 30));
     playerNameField.setForeground(Color.WHITE);
