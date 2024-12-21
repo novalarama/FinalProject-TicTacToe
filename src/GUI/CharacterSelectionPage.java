@@ -106,8 +106,13 @@ public class CharacterSelectionPage extends JPanel {
     add(nextCharacterButton, gbc);
 
     JLabel opponentLabelTitle = new JLabel("Select Your Opponent");
-    opponentLabelTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
-    opponentLabelTitle.setForeground(Color.WHITE);
+    try {
+      Font titleFont = loadPixelFont(24).deriveFont(Font.BOLD);
+      opponentLabelTitle.setFont(titleFont);
+      opponentLabelTitle.setForeground(Color.WHITE);
+    } catch (Exception e) {
+      opponentLabelTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
+    }
 
     gbc.gridx = 0;
     gbc.gridy = 2;
@@ -187,10 +192,13 @@ public class CharacterSelectionPage extends JPanel {
       difficultyLevel = "Easy";
       easyButton.setBackground(Color.BLACK);
       easyButton.setForeground(Color.WHITE);
+      easyButton.setFocusable(false);
       mediumButton.setBackground(Color.YELLOW);
       mediumButton.setForeground(Color.BLACK);
+      mediumButton.setFocusable(false);
       hardButton.setBackground(Color.RED);
       hardButton.setForeground(Color.BLACK);
+      hardButton.setFocusable(false);
       SoundEffect.CLICK_CHAR.play();
     });
 
@@ -198,10 +206,13 @@ public class CharacterSelectionPage extends JPanel {
       difficultyLevel = "Medium";
       mediumButton.setBackground(Color.BLACK);
       mediumButton.setForeground(Color.WHITE);
+      mediumButton.setFocusable(false);
       easyButton.setBackground(Color.GREEN);
       easyButton.setForeground(Color.BLACK);
+      easyButton.setFocusable(false);
       hardButton.setBackground(Color.RED);
       hardButton.setForeground(Color.BLACK);
+      hardButton.setFocusable(false);
       SoundEffect.CLICK_CHAR.play();
     });
 
@@ -209,10 +220,13 @@ public class CharacterSelectionPage extends JPanel {
       difficultyLevel = "Hard";
       hardButton.setBackground(Color.BLACK);
       hardButton.setForeground(Color.WHITE);
+      hardButton.setFocusable(false);
       easyButton.setBackground(Color.GREEN);
       easyButton.setForeground(Color.BLACK);
+      easyButton.setFocusable(false);
       mediumButton.setBackground(Color.YELLOW);
       mediumButton.setForeground(Color.BLACK);
+      mediumButton.setFocusable(false);
       SoundEffect.CLICK_CHAR.play();
     });
 
@@ -227,6 +241,8 @@ public class CharacterSelectionPage extends JPanel {
     add(difficultyPanel, gbc);
 
     JButton startGameButton = new JButton("Start Game");
+    startGameButton.setFocusable(false);
+
     startGameButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
