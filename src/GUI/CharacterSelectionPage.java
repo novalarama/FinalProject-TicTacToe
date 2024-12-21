@@ -45,6 +45,9 @@ public class CharacterSelectionPage extends JPanel {
 
     setLayout(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
+    gbc.fill = GridBagConstraints.NONE;
+    gbc.anchor = GridBagConstraints.CENTER;
+    gbc.insets = new Insets(15, 15, 15, 15); // Add consistent spacing
 
     JLabel titleLabel = new JLabel("Select Your Character");
     try {
@@ -58,7 +61,6 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridwidth = 3;
-    gbc.insets = new Insets(20, 0, 20, 0);
     add(titleLabel, gbc);
 
     characterIcons = loadCharacterImages();
@@ -73,14 +75,12 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
-    gbc.insets = new Insets(10, 10, 10, 10);
     add(prevCharacterButton, gbc);
 
-    characterLabel = new JLabel(resizeIcon(characterIcons.get(currentCharacterIndex), 100, 100));
+    characterLabel = new JLabel(resizeIcon(characterIcons.get(currentCharacterIndex), 120, 120));
     gbc.gridx = 1;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
-    gbc.insets = new Insets(10, 10, 10, 10);
     add(characterLabel, gbc);
 
     JButton nextCharacterButton = new JButton(">");
@@ -93,7 +93,6 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 2;
     gbc.gridy = 1;
     gbc.gridwidth = 1;
-    gbc.insets = new Insets(10, 10, 10, 10);
     add(nextCharacterButton, gbc);
 
     JLabel opponentLabelTitle = new JLabel("Select Your Opponent");
@@ -108,7 +107,6 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 0;
     gbc.gridy = 2;
     gbc.gridwidth = 3;
-    gbc.insets = new Insets(20, 0, 20, 0);
     add(opponentLabelTitle, gbc);
 
     JButton prevOpponentButton = new JButton("<");
@@ -121,14 +119,12 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 0;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
-    gbc.insets = new Insets(10, 10, 10, 10);
     add(prevOpponentButton, gbc);
 
-    opponentLabel = new JLabel(resizeIcon(characterIcons.get(currentOpponentIndex), 100, 100));
+    opponentLabel = new JLabel(resizeIcon(characterIcons.get(currentOpponentIndex), 120, 120));
     gbc.gridx = 1;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
-    gbc.insets = new Insets(10, 10, 10, 10);
     add(opponentLabel, gbc);
 
     JButton nextOpponentButton = new JButton(">");
@@ -141,7 +137,6 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 2;
     gbc.gridy = 3;
     gbc.gridwidth = 1;
-    gbc.insets = new Insets(10, 10, 10, 10);
     add(nextOpponentButton, gbc);
 
     JButton startGameButton = new JButton("Start Game") {
@@ -185,7 +180,6 @@ public class CharacterSelectionPage extends JPanel {
     gbc.gridx = 0;
     gbc.gridy = 4;
     gbc.gridwidth = 3;
-    gbc.insets = new Insets(20, 0, 20, 0);
     add(startGameButton, gbc);
   }
 
@@ -233,22 +227,22 @@ public class CharacterSelectionPage extends JPanel {
 
   private void showPreviousCharacter() {
     currentCharacterIndex = (currentCharacterIndex - 1 + characterIcons.size()) % characterIcons.size();
-    characterLabel.setIcon(resizeIcon(characterIcons.get(currentCharacterIndex), 100, 100));
+    characterLabel.setIcon(resizeIcon(characterIcons.get(currentCharacterIndex), 120, 120));
   }
 
   private void showNextCharacter() {
     currentCharacterIndex = (currentCharacterIndex + 1) % characterIcons.size();
-    characterLabel.setIcon(resizeIcon(characterIcons.get(currentCharacterIndex), 100, 100));
+    characterLabel.setIcon(resizeIcon(characterIcons.get(currentCharacterIndex), 120, 120));
   }
 
   private void showPreviousOpponent() {
     currentOpponentIndex = (currentOpponentIndex - 1 + characterIcons.size()) % characterIcons.size();
-    opponentLabel.setIcon(resizeIcon(characterIcons.get(currentOpponentIndex), 100, 100));
+    opponentLabel.setIcon(resizeIcon(characterIcons.get(currentOpponentIndex), 120, 120));
   }
 
   private void showNextOpponent() {
     currentOpponentIndex = (currentOpponentIndex + 1) % characterIcons.size();
-    opponentLabel.setIcon(resizeIcon(characterIcons.get(currentOpponentIndex), 100, 100));
+    opponentLabel.setIcon(resizeIcon(characterIcons.get(currentOpponentIndex), 120, 120));
   }
 
   @Override
