@@ -45,11 +45,14 @@ public class HomePage extends JPanel {
 
     titleLabel.setForeground(new Color(85, 255, 85));
 
-    JLabel descriptionLabel = new JLabel("<html><div style='text-align: center;'>"
-        + "Selamat datang di permainan Tic Tac Toe!<br>"
-        + "Masukkan nama Anda dan tekan tombol Start untuk memulai.</div></html>");
-    descriptionLabel.setFont(loadPixelFont(16));
+    JLabel descriptionLabel = new JLabel("Selamat datang di permainan Tic Tac Toe!");
     descriptionLabel.setForeground(Color.WHITE);
+    try {
+      Font descriptionFont = loadPixelFont(16);
+      descriptionLabel.setFont(descriptionFont);
+    } catch (Exception e) {
+      descriptionLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+    }
 
     playerNameField = new JTextField(15);
     playerNameField.setFont(loadPixelFont(16));
